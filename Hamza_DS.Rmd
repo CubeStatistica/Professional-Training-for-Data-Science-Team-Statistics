@@ -1,0 +1,31 @@
+---
+title: "Hamza_DS"
+author: "Syed Hamza"
+date: "2022-09-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("tidyverse")
+```
+```{r}
+course_dataframe <- read.csv("Data/Data - DS C1 Course.csv")
+```
+
+# Data Summary
+
+```{r}
+summary(course_dataframe)
+```
+
+# Attribute names of datasets
+
+```{r , echo=FALSE}
+colnames(course_dataframe)
+```
+
+
