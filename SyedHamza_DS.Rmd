@@ -1,0 +1,24 @@
+---
+title: "SyedHamza_DS"
+author: "Syed Hamza"
+date: "2022-09-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+dataset <- read.csv("Data/Data - DS C1 Course.csv")
+```
+
+```{r}
+is.na(dataset)
+```
+
+```{r}
+ggplot(dataset, aes(x= Age, y= Which.City.are.you.currently.residing.in.))+
+  geom_point()
+```
+
