@@ -1,0 +1,21 @@
+---
+title: "new"
+author: "Mujtaba"
+date: "2022-09-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("tidyverse")
+```
+```{r}
+dataset <- read_csv("Data/Data - DS C1 Course.csv")
+```
+```{r}
+is.na(dataset)
+```
+
