@@ -1,0 +1,17 @@
+```{r}
+
+library("tidyverse")
+library("ggplot2")
+```
+```{r}
+dataset <- read_csv("Data/Data - DS C1 Course.csv")
+```
+```{r}
+is.na(dataset)
+```
+
+```{r}
+ggplot(dataset, aes(x=dataset$Age, y=dataset$`Which City are you currently residing in?`))+
+  geom_point()
+```
+
