@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
+library(ggplot2)
 ```
 
 ## Importing the Data
@@ -66,4 +67,16 @@ summary(ds_course_data)
 ```{r,echo=FALSE}
 colnames(ds_course_data)
 ```
+
+```{r,echo=FALSE}
+is.na(ds_course_data)
+```
+
+
+```{r}
+ggplot(ds_course_data, aes(x= Age, y=Which.City.are.you.currently.residing.in.))+
+  geom_point()
+
+```
+
 
