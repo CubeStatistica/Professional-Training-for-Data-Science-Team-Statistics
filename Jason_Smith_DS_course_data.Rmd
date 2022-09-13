@@ -58,4 +58,12 @@ import numpy as np
 for i in range (10):
   print (i)
 ```
+```{r}
+summary(ds_course_data)
+```
+## Attribute Names of Dataset
+
+```{r,echo=FALSE}
+colnames(ds_course_data)
+```
 
