@@ -1,0 +1,49 @@
+---
+title: "DS Course Data"
+author: "Abdullah Sohail"
+date: '2022-09-14'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Reading in the Data
+
+
+## Importing the Data
+```{r cars}
+
+ds_course_data <- read.csv("Data/Data - DS C1 Course.csv")
+
+
+
+
+```
+
+## Exploratory Data Analysis (EDA)
+
+```{r EDA, echo=FALSE}
+
+```
+
+## Running Python in R 
+
+we will demonstrate how to write Python within R.
+
+```{r}
+library(reticulate)
+```
+```{python}
+
+import pandas as pd
+import numpy as np
+```
+
+```{python}
+for i in range(10):
+  print(i)
+```
+
