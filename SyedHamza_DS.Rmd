@@ -21,4 +21,21 @@ is.na(dataset)
 ggplot(dataset, aes(x= Age, y= Which.City.are.you.currently.residing.in.))+
   geom_point()
 ```
+```{r}
+dataset %>% select(Age) %>% n_distinct()
+```
+
+```{r}
+ggplot(dataset, aes(x= Age, y= Gender))+
+  geom_bar(stat = "identity")
+```
+
+```{r}
+dataset %>% group_by(dataset$Do.you.understand.that.this.is.a.paid.course..) %>% count()
+```
+
+```{r}
+ggplot(dataset, aes(x= Do.you.understand.that.this.is.a.paid.course.., y= Gender))+
+  geom_bar(stat = "identity")  
+```
 
