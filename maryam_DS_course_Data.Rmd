@@ -1,0 +1,32 @@
+---
+title: "DS course data"
+author: "Maryam Bibi"
+date: "2022-09-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+## Importing the Data
+
+
+
+```{r cars, warning=FALSE, message=FALSE}
+
+
+DS_course_Data <- read_csv("Data/Data - DS C1 Course.csv")
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
