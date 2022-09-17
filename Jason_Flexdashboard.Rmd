@@ -1,0 +1,50 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+```
+
+Column 
+-----------------------------------------------------------------------
+
+### Chart A
+## importing data set
+```{r}
+course_data = read.csv("Data/Data - DS C1 Course.csv")
+```
+## summerize the data
+```{r}
+head(course_data)
+```
+
+
+Column 
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
+Column 
+-----------------------------------------------------------------------
+### Jason's Flexdashboard
+
+```{r}
+
+```
+
