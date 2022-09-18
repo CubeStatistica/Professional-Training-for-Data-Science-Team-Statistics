@@ -1,0 +1,52 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+```
+
+Column 
+-----------------------------------------------------------------------
+
+### Chart A
+
+# Data
+```{r}
+
+dataset <- read_csv("Data/Data - DS C1 Course.csv")
+
+```
+
+Column 
+-----------------------------------------------------------------------
+
+### Chart B
+
+# Head
+```{r}
+
+head(dataset)
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
+Column 
+-----------------------------------------------------------------------
+
+### SyedHamza Flexdashboard
+
+```{r}
+
+```
+
