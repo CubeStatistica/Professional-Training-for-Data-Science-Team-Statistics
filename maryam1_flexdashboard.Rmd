@@ -8,6 +8,7 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(tidyverse)
 ```
 
 Column {data-width=650}
@@ -16,8 +17,8 @@ Column {data-width=650}
 ### Chart A
 # IMPORTING THE DATA
 ```{r}
-library(tidyverse)
-ds_course_data <- read_csv("Data/Data - DS C1 Course.csv")
+
+dfRaw = read_csv("Data/Data - DS C1 Course.csv")
 
 ```
 
@@ -27,13 +28,19 @@ Column {data-width=350}
 ### Chart B
 # summarize the data
 ```{r}
-head(ds_course_data)
+head(dfRaw)
 
 ```
 
 ### MARYAM'S FLEXDASHBOARD
+```{r}
+dfRaw %>% colnames()
+```
+
+
+
 
 ```{r}
-
+dfRaw %>% group_by("Do.you.understand.that.this.is.a.paid.course..") %>% count()
 
 ```
