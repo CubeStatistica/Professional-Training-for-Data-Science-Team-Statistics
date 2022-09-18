@@ -9,6 +9,8 @@ output:
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(tidyverse)
+library(knitr)
+#library(kableExtra)
 ```
 
 Column {data-width=650}
@@ -37,10 +39,10 @@ head(dfRaw)
 dfRaw %>% colnames()
 ```
 
-
+# STATISTICS
 
 
 ```{r}
-dfRaw %>% group_by("Do.you.understand.that.this.is.a.paid.course..") %>% count()
+dfRaw %>% group_by(Gender) %>% count() %>% kable()
 
 ```
