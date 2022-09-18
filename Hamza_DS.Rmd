@@ -5,27 +5,37 @@ date: "2022-09-12"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+library(tidyverse)
 ```
 
 ```{r}
-library("tidyverse")
-```
-```{r}
-course_dataframe <- read.csv("Data/Data - DS C1 Course.csv")
+dataset <- read.csv("Data/Data - DS C1 Course.csv")
 ```
 
-# Data Summary
+## Running Python in R
 
 ```{r}
-summary(course_dataframe)
+
+library(reticulate)
+
 ```
 
-# Attribute names of datasets
+```{python}
 
-```{r , echo=FALSE}
-colnames(course_dataframe)
+# import pandas as pd
+# import numpy as np
+
 ```
+
+```{python}
+
+for i in range(10):
+  print(i)
+
+```
+
+
+
 
 

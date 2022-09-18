@@ -1,0 +1,47 @@
+---
+title: "Flexdashboard_DS"
+author: "Syed Hamza"
+date: "2022-09-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(flexdashboard)
+library(tidyverse)
+```
+
+Column
+----------------------------------------------------------
+
+### Chart A
+ 
+# Importing Dataset
+
+```{r}
+
+dataset <- read.csv("Data/Data - DS C1 Course.csv")
+
+```
+
+# Smmarize the data
+
+```{r}
+
+head(dataset)
+
+```
+
+Column
+----------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+
