@@ -9,19 +9,28 @@ output:
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(tidyverse)
+library(knitr)
+#library(KableExtra)
+
+
+```
+
+
+
+### Chart A
+Column 
+-----------------------------------------------------------------------
+## importing data set
+```{r}
+dfRaw <- read.csv("Data/Data - DS C1 Course.csv")
 ```
 
 Column 
 -----------------------------------------------------------------------
 
-### Chart A
-## importing data set
+## summarize the data
 ```{r}
-course_data = read.csv("Data/Data - DS C1 Course.csv")
-```
-## summerize the data
-```{r}
-head(course_data)
+head(dfRaw)
 ```
 
 
@@ -45,6 +54,6 @@ Column
 ### Jason's Flexdashboard
 
 ```{r}
-
+dfRaw %>% group_by(Do.you.understand.that.this.is.a.paid.course..) %>% count()
 ```
 
