@@ -23,7 +23,7 @@ Column
 
 ```{r}
 
-dataset <- read.csv("Data/Data - DS C1 Course.csv")
+dfRaw <- read.csv("Data/Data - DS C1 Course.csv")
 
 ```
 
@@ -31,7 +31,7 @@ dataset <- read.csv("Data/Data - DS C1 Course.csv")
 
 ```{r}
 
-head(dataset)
+head(dfRaw)
 
 ```
 
@@ -41,6 +41,14 @@ Column
 ### Chart B
 
 ```{r}
+dfRaw %>% colnames()
+
+```
+
+
+```{r}
+
+dfRaw %>% group_by(Do.you.understand.that.this.is.a.paid.course..) %>%  count()
 
 ```
 
