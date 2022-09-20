@@ -1,0 +1,48 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(knitr)
+#library(kableExtra)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+# IMPORTING THE DATA
+```{r}
+
+dfRaw = read_csv("Data/Data - DS C1 Course.csv")
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+# summarize the data
+```{r}
+head(dfRaw)
+
+```
+
+### MARYAM'S FLEXDASHBOARD
+```{r}
+dfRaw %>% colnames()
+```
+
+# STATISTICS
+
+
+```{r}
+dfRaw %>% group_by(Gender) %>% count() %>% kable()
+
+```
