@@ -9,14 +9,16 @@ output:
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(tidyverse)
+library(knitr)
+library(kableExtra)
 ```
 
 Column 
 -----------------------------------------------------------------------
 
-### Chart A
+### Chart 1
 
-
+# okay
 ```{r}
 
 dfRaw <- read_csv("Data/Data - DS C1 Course.csv")
@@ -26,7 +28,7 @@ dfRaw <- read_csv("Data/Data - DS C1 Course.csv")
 Column 
 -----------------------------------------------------------------------
 
-### Chart B
+### Chart 2
 
 
 ```{r}
@@ -35,7 +37,7 @@ head(dfRaw)
 
 ```
 
-### Chart C
+### Chart 3
 
 ```{r}
 
@@ -50,7 +52,9 @@ Column
 dfRaw %>% colnames()
 ```
 
+# Statistics 
+
 ```{r}
-dfRaw %>% group_by(dfRaw$`Do you understand that this is a paid course ?...3`) %>% count()
+dfRaw %>% group_by(Gender) %>% count() %>%  kable()
 ```
 
