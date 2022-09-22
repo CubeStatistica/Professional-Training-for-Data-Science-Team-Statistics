@@ -388,11 +388,11 @@ library(tidyverse)</code></pre>
 </div>
 <div id="importing-dataset" class="section level1">
 <h1>Importing Dataset</h1>
-<pre class="r"><code>dataset &lt;- read.csv(&quot;Data/Data - DS C1 Course.csv&quot;)</code></pre>
+<pre class="r"><code>dfRaw &lt;- read.csv(&quot;Data/Data - DS C1 Course.csv&quot;)</code></pre>
 </div>
 <div id="smmarize-the-data" class="section level1">
 <h1>Smmarize the data</h1>
-<pre class="r"><code>head(dataset)</code></pre>
+<pre class="r"><code>head(dfRaw)</code></pre>
 <pre><code>##            Timestamp Student.ID Do.you.understand.that.this.is.a.paid.course..
 ## 1 8/25/2022 14:35:19          1                                            Yes
 ## 2  8/22/2022 5:25:04          2                                             No
@@ -544,6 +544,45 @@ library(tidyverse)</code></pre>
 <h2>Column</h2>
 <div id="chart-b" class="section level3">
 <h3>Chart B</h3>
+<pre class="r"><code>dfRaw %&gt;% colnames()</code></pre>
+<pre><code>##  [1] &quot;Timestamp&quot;                                                                                                                      
+##  [2] &quot;Student.ID&quot;                                                                                                                     
+##  [3] &quot;Do.you.understand.that.this.is.a.paid.course..&quot;                                                                                 
+##  [4] &quot;Course.Fee.Email&quot;                                                                                                               
+##  [5] &quot;Date.sent&quot;                                                                                                                      
+##  [6] &quot;Payment&quot;                                                                                                                        
+##  [7] &quot;Payment.Receipt.Sent&quot;                                                                                                           
+##  [8] &quot;How.and.where.did.you.hear.about.this.course.&quot;                                                                                  
+##  [9] &quot;Which.Country.are.you.currently.residing.in.&quot;                                                                                   
+## [10] &quot;Which.City.are.you.currently.residing.in.&quot;                                                                                      
+## [11] &quot;Gender&quot;                                                                                                                         
+## [12] &quot;Age&quot;                                                                                                                            
+## [13] &quot;Are.you.currently.attending.University...College.&quot;                                                                              
+## [14] &quot;Latest.Degree.Completed.or.in.Progress.&quot;                                                                                        
+## [15] &quot;Name.of.University.or.College.currently.or.previously.attended.&quot;                                                                
+## [16] &quot;Discipline.of.Degree.&quot;                                                                                                          
+## [17] &quot;Have.you.taken.any.foundational.course.in.data.science...econometrics...statistics...computer.science.&quot;                         
+## [18] &quot;What.programming.language.s..are.you.most.comfortable.in..R..Python..Java..JS..etc....If.none.please.type..None...&quot;             
+## [19] &quot;Prior.Work.Experience.in.Data.Science.or.Machine.Learning&quot;                                                                      
+## [20] &quot;Primary.Reason.for.taking.this.course.&quot;                                                                                         
+## [21] &quot;Do.you.understand.that.this.is.a.paid.course...1&quot;                                                                               
+## [22] &quot;Prior.Formal.Education..course.teaching.or.using.R..university.assignments..coding.projects..course.work..etc...in.R.&quot;          
+## [23] &quot;Prior.Formal.Education..course.teaching.or.using.Python..university.assignments..coding.projects..course.work..etc...in.Python.&quot;
+## [24] &quot;Prior.Work.Experience.in.R.&quot;                                                                                                    
+## [25] &quot;Prior.Work.Experience.in.Python.&quot;                                                                                               
+## [26] &quot;Personal.Education.or.Knowledge..learning.R.on.your.own.and.or.doing.personal.projects..etc...in.R.&quot;                            
+## [27] &quot;Personal.Education.or.Knowledge..learning.Python.on.your.own.and.or.doing.personal.projects..etc...in.Python.&quot;                  
+## [28] &quot;Do.you.have.a.LinkedIn.Account.&quot;                                                                                                
+## [29] &quot;Do.you.have.any.feedback..thoughts..or.comments.you.would.like.to.share.&quot;</code></pre>
+<pre class="r"><code>dfRaw %&gt;% group_by(Do.you.understand.that.this.is.a.paid.course..) %&gt;%  count()</code></pre>
+<pre><code>## # A tibble: 4 × 2
+## # Groups:   Do.you.understand.that.this.is.a.paid.course.. [4]
+##   Do.you.understand.that.this.is.a.paid.course..     n
+##   &lt;chr&gt;                                          &lt;int&gt;
+## 1 &quot;&quot;                                                14
+## 2 &quot;no&quot;                                              20
+## 3 &quot;No&quot;                                             120
+## 4 &quot;Yes&quot;                                             93</code></pre>
 </div>
 </div>
 </div>
