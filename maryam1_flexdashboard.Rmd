@@ -42,7 +42,28 @@ dfRaw %>% colnames()
 # STATISTICS
 
 
+
 ```{r}
-dfRaw %>% group_by(Gender) %>% count() %>% kable()
+
+
+dfRaw %>% select(Age) %>% n_distinct()
+
+
+
 
 ```
+
+
+
+
+
+
+
+```{r}
+ggplot(dfRaw, aes(Age, Gender) )+
+geom_bar(stat = "identity")
+
+
+```
+
+
