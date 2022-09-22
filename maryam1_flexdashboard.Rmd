@@ -7,6 +7,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+library(ggplot2)
 library(flexdashboard)
 library(tidyverse)
 library(knitr)
@@ -23,6 +24,16 @@ Column {data-width=650}
 dfRaw = read_csv("Data/Data - DS C1 Course.csv")
 
 ```
+```{r}
+is.na(dfRaw)
+
+
+```
+```{r}
+ggplot(dfRaw, aes(Age, `Which City are you currently residing in?`))+
+  geom_point()
+```
+
 
 Column {data-width=350}
 -----------------------------------------------------------------------
@@ -53,6 +64,10 @@ dfRaw %>% select(Age) %>% n_distinct()
 
 ```
 
+```{r}
+is.na(dfRaw)
+```
+
 
 
 
@@ -65,5 +80,7 @@ geom_bar(stat = "identity")
 
 
 ```
+
+
 
 
