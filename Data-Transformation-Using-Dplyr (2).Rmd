@@ -1,0 +1,90 @@
+---
+title: "Data Transformation Using Dplyr"
+author: "Cube Statistica"
+date: '2022-09-19'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+## Importing Packages
+
+```{r Packages, warning=FALSE}
+library(tidyverse)
+```
+
+```{r}
+```{r datahead}
+dataRaw <- read_csv("Data-DS-C1-Course.csv")
+dataRaw
+
+```
+## Filter
+```{r}
+# select all rows where gender is male
+filter(dataRaw, Gender== "Male")
+
+# saving the output in object jan1
+male <- filter(dataRaw, Gender == "Male")
+male
+```
+## Arrange
+
+```{r}
+# arrange flights data by month 
+arrangeByMonth <- arrange(dataRaw,Age)
+head(arrangeByMonth)
+tail(arrangeByMonth)
+
+```
+
+## Select
+```{r}
+select(dataRaw, Gender, Age)
+```
+## Mutate
+
+```{r}
+# make new column where Gender of Male is 1 and Female is 0
+
+append_mutate <- mutate(dataRaw, 
+                        binary = if_else(Gender == "Male",true = 1,false = 0))
+head(append_mutate)
+```
+## Grouped Summaries
+```{r}
+group_by(dataRaw, Gender) %>%
+  summarise(
+    count_males = n()
+    )
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
