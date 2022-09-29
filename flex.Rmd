@@ -8,17 +8,32 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
 ```
+# EDA
 
-Column 
+Column
 -----------------------------------------------------------------------
 
-### Chart A
-* Importing Data
+### Chart 1
+
 ```{r}
 data <- read.csv("Data/Data - DS C1 Course.csv")
-head(data)
 ```
+
+```{r}
+df_paid <- data %>% group_by(Do.you.understand.that.this.is.a.paid.course..) %>% count()
+ggplot(df_paid, aes(x = Do.you.understand.that.this.is.a.paid.course.., y = n)) + geom_bar(stat = "identity", fill = "blue")
+```
+### Count of Age/Gender
+
+```{r}
+df_Age <- data %>% group_by(Age) %>% count()
+ggplot(df_Age, aes(x = Age, y = n)) + geom_bar(stat = "identity", fill = "red")
+```
+
 
 Column
 -----------------------------------------------------------------------
@@ -26,7 +41,7 @@ Column
 ### Chart B
 
 ```{r}
-
+head(data)
 ```
 
 ### Chart C
@@ -35,5 +50,3 @@ Column
 
 ```
 
-Column
------------------------------------------------------------------------

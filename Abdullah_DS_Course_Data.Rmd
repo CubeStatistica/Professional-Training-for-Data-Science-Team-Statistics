@@ -6,8 +6,9 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(flexdashboard)
+library(knitr)
 ```
 
 ## Reading in the Data
@@ -32,18 +33,17 @@ ds_course_data <- read.csv("Data/Data - DS C1 Course.csv")
 ## Running Python in R 
 
 we will demonstrate how to write Python within R.
-
 ```{r}
-library(reticulate)
+ds_course_data %>% colnames()
 ```
-```{python}
-
-import pandas as pd
-import numpy as np
+```{r}
+ds_course_data %>% group_by(Gender) %>% count() %>% kable()
 ```
 
-```{python}
-for i in range(10):
-  print(i)
+
+
+
+
 ```
+
 

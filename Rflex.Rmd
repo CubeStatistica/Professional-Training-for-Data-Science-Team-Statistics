@@ -1,0 +1,57 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+# page 0
+
+Column 
+-----------------------------------------------------------------------
+
+### Chart A
+
+```
+```
+```{python}
+import pandas as pd
+
+data = pd.read_csv("Data/Data - DS C1 Course.csv")
+data.columns
+```
+```{r}
+
+```
+
+# page 1
+
+```
+```
+```{python}
+import matplotlib.pyplot as plt
+plt.hist(data = data, x = 'Primary Reason for taking this course?')
+plt.show()
+```
+
+```
+# page 2
+
+### Chart B
+
+```{r}
+
+```
+
+# page 3
+
+### Chart C
+
+```{r}
+
+```
+
