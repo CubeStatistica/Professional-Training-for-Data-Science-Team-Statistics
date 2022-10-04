@@ -4,7 +4,7 @@ output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
-runtime: shiny
+    runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
@@ -18,9 +18,7 @@ Column
 
 ### Chart A
 
-# Data
 ```{r}
-
 dataset <- read_csv("Data/Data - DS C1 Course.csv")
 
 ```
@@ -30,30 +28,24 @@ Column
 
 ### Chart B
 
-# Head
 ```{r}
-head(dataset, n =10)
+varSelectInput("Id", "var_y", dataset)
 
 ```
 
 ### Chart C
 
 ```{r}
-
+attendance_count = dataset %>% group_by(`Are you currently attending University / College?`) %>% count()
 ```
-
-Column 
------------------------------------------------------------------------
-
-### SyedHamza Flexdashboard
 
 ```{r}
-
+renderPlot({
+  attendance_count = dataset %>% group_by(!!input$Id) %>% count()
+    ggplot(data = attendance_count, aes(x = n, y = !!input$Id )) + 
+    geom_line(color = "red") +
+    geom_point() 
+  })
 ```
 
-
-
-```{r}
-
-```
 
