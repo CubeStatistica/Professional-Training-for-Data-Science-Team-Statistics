@@ -10,44 +10,34 @@ output:
 library(flexdashboard)
 library(tidyverse)
 library(knitr)
-#library(KableExtra)
-
-
-```
-
-
-
-### Chart A
-Column 
------------------------------------------------------------------------
-## importing data set
-```{r}
-dfRaw <- read.csv("Data/Data - DS C1 Course.csv")
+library(kableExtra)
 ```
 
 Column 
 -----------------------------------------------------------------------
 
-## summarize the data
+### Chart 1
+
+# okay
 ```{r}
+
+dfRaw <- read_csv("Data/Data - DS C1 Course.csv")
+
+```
+
+Column 
+-----------------------------------------------------------------------
+
+### Chart 2
+
+
+```{r}
+
 head(dfRaw)
-```
-
-```{r}
 
 ```
 
-
-Column 
------------------------------------------------------------------------
-
-### Chart B
-
-```{r}
-
-```
-
-### Chart C
+### Chart 3
 
 ```{r}
 
@@ -55,9 +45,16 @@ Column
 
 Column 
 -----------------------------------------------------------------------
-### Jason's Flexdashboard
+
+### SyedHamza Flexdashboard
 
 ```{r}
-dfRaw %>% group_by(Do.you.understand.that.this.is.a.paid.course..) %>% count()
+dfRaw %>% colnames()
+```
+
+# Statistics 
+
+```{r}
+dfRaw %>% group_by(Gender) %>% count() %>%  kable()
 ```
 
