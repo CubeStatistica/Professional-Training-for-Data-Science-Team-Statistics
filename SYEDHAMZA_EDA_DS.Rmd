@@ -1,0 +1,169 @@
+---
+title: "SYEDHAMZA_EDA_DS"
+author: "Syed Hamza"
+date: "2022-10-20"
+output: html_document
+---
+
+The tutorial will show you how to use data cleaning, transformation and 
+visualization to explore the data in the systematic manner. 
+This is a task Statisticians refer as **Exploratory Data Analysis (EDA)**.
+
+Specifically, EDA is an iterative cycle :
+
+1. Generate questions about the data.
+2. Search for answers by visualizing, transforming and modelling your data.
+3. Use what you learn to refine your questions and/or generate new questions.
+
+Data Cleaning is just one application of EDA: A process of transforming raw 
+data into consistent data that can be analyzed. 
+
+Some of the examples of data cleaning is that the data is consistent, have 
+correct data types and missing data is imputed. We will start with loading the 
+tidyverse package and our data set. 
+
+## Importing Packages
+
+```{r packages, warning=FALSE}
+library(tidyverse)
+library(lubridate)
+```
+
+
+```{r load data}
+dataRaw <- read_csv("Data/Data - DS C1 Course.csv")
+colnames(dataRaw)
+```
+
+Performing EDA with Javeria (Week 4 Tutorials)
+
+1) Univariate Analysis
+
+
+EDA is fundamentally a creative process. Like any creative processes, the key 
+is to ask quality questions. In our course data set, we will ask the 
+following questions:
+
+1. How has number of responses in form varied over the time?
+2. What is the distribution of university the students filled 
+out the form?
+3. Which social platform students heard about the course?
+
+While we will restrict our tutorial to these questions but you can think of 
+other questions when making your dashboard: 
+
+1. What is Distribution of country and city the responses are from ?
+2. How does paying for the course correlate with Gender and Age ?
+3. What Prior Work experience in R and Python the students have ?
+
+## Data Cleaning
+
+For our set of specified questions, we start by selecting the variables of 
+interest. Specifically, we will select the following variables: 
+
+1. Student ID
+2. Time stamp
+3. Name of University or College currently or previously attended ?
+
+Before data selection, we will rename the columns as some columns have spaces
+and have long names. We will use rename function in dplyr package.
+
+
+```{r variables rename}
+dataRenamed <- dataRaw %>%
+  rename("Id" = "Student ID",
+         "Date_time" = "Timestamp",
+         "Qr_uni_col" = "Name of University or College currently or previously attended?",
+         "Heard_about_course" = "How and where did you hear about this course?"
+         )
+
+# Check for renaming
+names(dataRenamed[1:15])
+```
+
+
+### Which social platform students heard about the course?
+
+We start by cleaning the heard about course variable
+
+```{r platforms}
+dataRenamed %>% 
+  select(Heard_about_course) %>% 
+  distinct() %>% 
+  count()
+```
+
+There are 133 unique values currently for heard about course. If you see, there are entries mentioning similar platforms. We can combine those entries under a single platform. 
+Wherever it is mentioned that a person heard about us through WhatsApp, We will combine it and make it just "WhatsApp". similarly if someone mentions colleague, friend from university or anything related to friendship. We will combine it to just "Friend".
+
+We will use three functions to do this:
+
+* mutate() to change or create new variables
+* case_when() as if/else command
+* str_detect() to select specified text
+
+```{r categorize}
+dataCategorized_Platform <- dataRenamed %>% 
+  mutate(
+    Platform = case_when(
+      str_detect(
+        Heard_about_course, 
+        "Through a friend|Colleague|Friend|Through a collegue|University friends|Friends|Referral|From a friend|Through a friend|My friend tell me about this course|From friend|From a Friend|friend|A friend|Family|An hour ago from a friend|Friend suggest|From my friend|From University Fellow|By friend|My friend send me this advertise|My friend sent me the details of this course on WhatsApp.|Faizan|My friend share this on university group|through a friend|FROM MY FRIENDS AND THROUGH SOCIAL MEDIA|From my friend|A friend of mine informed me about it.|University Senior|through a friend|I heard it from a friend on a WhatsApp group.|University friends|University Friend|Uzair Aslam|FROM FRIENDS AND SENIORS|By a friend|One of my friend recommended me to do this course together with them."
+      ) ~ "Friend",
+      str_detect(
+        Heard_about_course,
+        "WhatsApp group|Whatsapp|Whatsapp group|Through a Whatsapp group|From WhatsApp group|I heard about this course through a whatsapp group|Students whatsapp group|whatsapp group|WhatsApp Job Finders Group|IAM heard about this course in WhatsApp group|through whatsapp|Whatsapp  (University Job Group)|WhatsApp Group|Online through WhatsApp group|My friend sent me the details of this course on WhatsApp.|I HEARD ABOUT FROM OUR WHATSAPP GROUP|Whatsapp group chat|I heard it from a friend on a WhatsApp group.|Whatsapp link|Job group on What's app|Through a Whatsapp group|From WhatsApp group|From a whatsapp group of my University|In a Watsapp group|Heard it from a senior in a whatsapp group." 
+      ) ~ "WhatsApp",
+      str_detect(
+        Heard_about_course,
+        "LinkedIn|linkedin|on linkedin page|Linkdin|Someone in my connections posted about this opportunity on LinkedIn.|I was searching for Data Science Internships on Linkedin|Through a friend on LinkedIn"
+      ) ~ "Linkedin",
+      str_detect(
+        Heard_about_course,
+        "Facebook | Advertisement was shared in Kaggle Group on Facebook |Fb group|Fb group| Facebook group |Facebook Group|Kaggle Community Pakistan|In a facebook group|From Kaggle Community Pakistan Group on Facebook|Facebook post|Facebook post|Social Facebook|Facebook group of IBA|Social Media(Facebook)|facebook|On Facebook|Face Book|FB|Facebook page|On Facebook group|IBA Group on Facebook"
+      ) ~ "Facebook",
+      str_detect(
+        Heard_about_course,
+        "DataCamp group|In a datacamp group"
+      ) ~ "DataCamp",
+      str_detect(
+        Heard_about_course,
+        'People of IBA and LUMS|People of IBA and Lums|Facebook group: People of IBA and LUMS|IBA and LUMS Facebook page|Peopel of LUMS and IBA group|The group of iba and lums|I heard it on the group of IBA and LUMS|There is Facebook of IBA and LUMS students where I get to know about this course'
+      ) ~ "IBA/LUMS Fb group",
+      str_detect(
+        Heard_about_course,
+        "Teacher/instructor|My Tutor gave me link|By my teacher|Teacher recommanded|Teacher|From my teacher|Referred by a mentor."
+      ) ~ "Teacher",
+      str_detect(
+        Heard_about_course,
+        "University forum|IBA|From university group.|University Group|IBA(university)|University ( IBA )|University|University job guiding group|university|From my university group|Group"
+      ) ~ "University",
+      str_detect(
+        Heard_about_course,
+        "Soical media|Social Media|Job posting group|From a post|Social Network|Social media|Through Internet|on social media|on social media site|On social media|From social media|I am searching courses for data science."
+      ) ~ "Social Media",
+      TRUE ~ Heard_about_course  #keep all others same
+
+    )
+  )            
+```
+
+Let us check how many disctinct entries are left
+
+```{r}
+dataCategorized_Platform %>% select(Platform) %>% distinct() %>% count()
+```
+
+We have reduced from 133 to 13 unique values only. 
+
+```{r}
+# Sort platform by their frequencies
+platform_sorted <- dataCategorized_Platform %>% group_by(Platform) %>% summarize(Total = n()) %>% arrange(desc(Total)) %>% head(n = 14)
+
+g <- ggplot(data = platform_sorted, aes(x = reorder(platform_sorted$Platform, Total), y = Total)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  ylab("Number of Students") +
+  xlab("Platforms") 
+g
+```
