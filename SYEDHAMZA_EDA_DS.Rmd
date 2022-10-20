@@ -1,15 +1,10 @@
 ---
-title: "EDA with Dplyr and Ggplot"
-author: "Cube Statistica"
-date: '2022-09-20'
-output:
-  pdf_document: default
-  html_document: default
+title: "SYEDHAMZA_EDA_DS"
+author: "Syed Hamza"
+date: "2022-10-20"
+output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-```
 The tutorial will show you how to use data cleaning, transformation and 
 visualization to explore the data in the systematic manner. 
 This is a task Statisticians refer as **Exploratory Data Analysis (EDA)**.
@@ -37,8 +32,14 @@ library(lubridate)
 
 ```{r load data}
 dataRaw <- read_csv("Data/Data - DS C1 Course.csv")
-head(dataRaw, n = 10)
+colnames(dataRaw)
 ```
+
+Performing EDA with Javeria (Week 4 Tutorials)
+
+1) Univariate Analysis
+
+
 EDA is fundamentally a creative process. Like any creative processes, the key 
 is to ask quality questions. In our course data set, we will ask the 
 following questions:
@@ -79,166 +80,17 @@ dataRenamed <- dataRaw %>%
 # Check for renaming
 names(dataRenamed[1:15])
 ```
-Now we will select the required variables.
 
-```{r variable selection}
-# select variables for analysis
-dataSelected <- select(dataRenamed,
-                       Id, Date_time, Qr_uni_col, Heard_about_course)
-
-# make ID rowname of data frame
-dataSelected <- column_to_rownames(dataSelected , var = "Id")
-
-head(dataSelected)
-```
-### How has number of responses in form varied over the time?
-
-Let us say we want to analyze how number of responses have varied over time. For
-this we start by correcting the date-time variable type with help of lubridate
-```{r date time cleaning}
-
-# Convert time column to data-time type
-dataSelected$Date_time <- lubridate::mdy_hms(dataSelected$Date_time)
-
-# Make date and time in separate variables
-dataSelected <- tidyr::separate(dataSelected, Date_time, c("Date", "Time"), sep = " ")
-
-# Convert Date to date type
-dataSelected$Date <- lubridate::ymd(dataSelected$Date)
-
-head(dataSelected)
-```
-
-After separating date and time variables, we can create grouped summaries to see
-students filling out the form
-
-```{r grouped summary}
-# make grouped summary of students by day
-groupedDate <- dataSelected %>% 
-  group_by(day = lubridate::floor_date(x = Date, unit = 'day')) %>%
-  summarize(grouped = n())
-
-groupedDate
-```
-Now we can make a time series plot to see the trend of course participation.
-
-```{r plot of students participation}
-ggplot(data = groupedDate, mapping = aes(x = day, y = grouped)) +
-  geom_line(color = "blue") +
-  geom_point() +
-  xlab("Days") +
-  ylab("Count") +
-  scale_x_date(limit=c(as.Date("2022-08-20"),as.Date("2022-09-07")))
-```
-
-We see that 109, 44.1% of total registrations, were filled on August 22nd. 
-After which there was sharp decline. The form count increased on August 25th by 
-52.3 % compared to its previous day and then again on August 28th.
-
-### What is the distribution of university ?
-Another important aspect of registrations to see which University and discipline
-the students are from. We start by cleaning the university variable
-```{r analyze university background}
-dataSelected %>% 
-  select(Qr_uni_col) %>%
-  distinct() %>% #this line removes duplicates
-  count()
-```
-
-```{r see unique values}
-# First six unique values
-head(unique(x = dataSelected$Qr_uni_col))
-```
-There are 143 unique values currently for University background. If you see the 
-list, there are duplicates in the entries.
-There are some clear categories that we can combine jobs into. 
-For example, "Iba Karachi", "IBA" and "Institute of Business Administration" 
-can be combined into "IBA". We will use three functions to do this
-
-* mutate() to change or create new variables
-* case_when() as a kind of if/else command
-* str_detect() to select specified text
-
-```{r categorize }
-dataCategorized <- dataSelected %>%
-  mutate(
-    Uni_col = case_when(
-      str_detect(
-        Qr_uni_col,
-        "IBA|Institute of Business Administration|Iba Karachi|IBA, Karachi|Iba Karachi|institute of business administration|Institute of business administration|INSTITUTE OF BUSINESS ADMINISTRATION KARACHI|Institute Of Business Administration|Institute Of Business Administration, Karachi|Institute of Business Adminstration|Institute of business administration karachi|INSTITUTE OF BUISNESS ADMINISTRATION KARACHI"
-      ) ~ "IBA",
-      str_detect(
-        Qr_uni_col,
-        "Azam|Quaid I azam university|Quaid-I-Azam University, Islamabad|Quaid e Azam University|Quaid e Azam university       Islamabad|Quaid-e-Azam University Islamabad|Quaid-i-Azam University Islamabad|Quaid e Azzam university Islamabad"
-      ) ~ "QU",
-      str_detect(
-        Qr_uni_col,
-        "Sir syed university of Engineering Technology|Sir syed university of engineering and technology|Sir Syed University|Sir Syed University Of Engineering And Technology|Sir Syed University Of Engineering & Technology|Sir syed University of engineering and technology|Sirsyed university of engineering and technology|Sir Syed University of Engineering and Technology|Sir Syed university of engineering and technology|Sur Syed University of Engineering and Technology|Sir Syed University Engineering Technology"
-      ) ~ "SYED",
-      str_detect(
-        Qr_uni_col,
-        "Ned university|NED University of Engineering and Technology Karachi|NED|Ned University"
-      ) ~ "NED",
-      str_detect(Qr_uni_col, "IQRA|Iqra|iqra|iqra university") ~ "IQRA",
-      str_detect(Qr_uni_col, "Sindh") ~ "SMIU" ,
-      str_detect(Qr_uni_col, "Karachi|University of karachi") ~ "KU",
-      str_detect(Qr_uni_col, "Szabist", ) ~ "SZABIST",
-      str_detect(Qr_uni_col, "Management|management", ) ~ "IOBM",
-      str_detect(Qr_uni_col, "University of engineering and technology Peshawar") ~ "UET",
-      TRUE ~ Qr_uni_col  #keep all others same
-    )
-  )
-```
-
-Let us check how many distinct entries we have.
-
-```{r}
-dataCategorized %>% 
-  select(Uni_col) %>%
-  distinct() %>% count()
-```
-
-```{r}
-# see the unique values
-head(unique(x = dataCategorized$Uni_col))
-```
-We have reduced from 143 unique values to 71 values only. This means we have made 
-our data more consistent. Now we make Bar Plot to visualize it.
-
-```{r bar plot university}
-# Sort universities by their frequencies
-(uniSorted <- dataCategorized %>% 
-  group_by(Uni_col) %>%
-  summarise(Total = n()) %>%
-  arrange(desc(Total)) %>%
-  head(n = 6))
-  
-# Make Bar Plot
-p <- ggplot(data = uniSorted, aes(x= reorder(Uni_col, Total), y = Total)) + 
-  geom_bar(stat="identity", fill = "red") +
-  coord_flip() +
-  ylab("Number of Students") +
-  xlab("University/College") 
-  
-p
-```
-
-We see that 29.1% of the students participated were from IBA followed by IQRA and
-Sir Syed University 10.9% and 10.1 % respectively.
 
 ### Which social platform students heard about the course?
 
 We start by cleaning the heard about course variable
 
 ```{r platforms}
-dataSelected %>% 
+dataRenamed %>% 
   select(Heard_about_course) %>% 
   distinct() %>% 
   count()
-```
-
-```{r see unique values}
-
 ```
 
 There are 133 unique values currently for heard about course. If you see, there are entries mentioning similar platforms. We can combine those entries under a single platform. 
@@ -251,7 +103,7 @@ We will use three functions to do this:
 * str_detect() to select specified text
 
 ```{r categorize}
-dataCategorized_Platform <- dataSelected %>% 
+dataCategorized_Platform <- dataRenamed %>% 
   mutate(
     Platform = case_when(
       str_detect(
@@ -311,54 +163,7 @@ platform_sorted <- dataCategorized_Platform %>% group_by(Platform) %>% summarize
 g <- ggplot(data = platform_sorted, aes(x = reorder(platform_sorted$Platform, Total), y = Total)) +
   geom_bar(stat = "identity") +
   coord_flip() +
-  ylab("Platforms") +
-  xlab("Number of Students") 
+  ylab("Number of Students") +
+  xlab("Platforms") 
 g
 ```
-
-
-
-
-```{r}
-
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
